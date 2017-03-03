@@ -14,7 +14,7 @@ Import-Module \<path>\PowerLumber.psm1
 ### Copy and paste these lines. c:\temp needs to exist.  
       $webclient = New-Object System.Net.WebClient  
       $filepath = "C:\temp\PowerLumber.psm1"  
-      $url = "https://raw.github.com/jpsider/PowerLumber/master/powerLumber.psm1"  
+      $url = "https://raw.github.com/jpsider/PowerLumber/master/PowerLumber.psm1"  
       $webclient.DownloadFile($url,$filepath)  
       Import-module $filepath  
 
