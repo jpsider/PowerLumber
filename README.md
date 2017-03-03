@@ -32,12 +32,12 @@ write-Log
 ### Get a timestamp  
     $datenow = Get-Timestamp  
 ### Log a message to logfile with no console output  
-		write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle noConsole  
+    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle noConsole  
 ### Log a message to logfile with console output  
-		write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle both  
+    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle both  
 ### Log a message with only console output (not sure why'd you would specify a log file, but you can!)  
-		write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle consoleOnly  
+    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle consoleOnly  
 ### Log a message to logfile with console output  
-		write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"                        
+    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"                        
 ### Log a message with only console output  
-		write-Log -Message "I love lamp" -OutputStyle consoleOnly  
+    write-Log -Message "I love lamp" -OutputStyle consoleOnly  
