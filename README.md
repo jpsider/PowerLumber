@@ -1,6 +1,5 @@
 # PowerLumber
 ![Alt text](https://github.com/jpsider/PowerLumber/blob/master/Images/PowerLumber_small.png "PowerLumber Icon")  
-Powershell logging  
 
 ## Overview  
 This powershell module includes commands to assist with logging.    
