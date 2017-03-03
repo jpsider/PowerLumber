@@ -1,5 +1,5 @@
 # PowerLumber
-![Alt text](https://github.com/jpsider/PowerLumber/blob/master/Images/PowerLumber.png "PowerLumber Icon")  
+![Alt text](https://github.com/jpsider/PowerLumber/blob/master/Images/PowerLumber_small.png "PowerLumber Icon")  
 Powershell logging  
 
 ## Overview  
