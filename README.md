@@ -1,11 +1,11 @@
 # PowerLumber
+![Alt text](https://github.com/jpsider/PowerLumber/blob/master/Images/PowerLumber.png "PowerLumber Icon")  
 Powershell logging  
 
 ## Overview  
 This powershell module includes commands to assist with logging.    
 
 ## Requirements  
-![Alt text](https://github.com/jpsider/PowerLumber/blob/master/z_Images/PowerLumber.png "PowerLumber Icon") 
 Powershell version 5.0 (It may work with older versions, but its not tested.) 
 
 ## Installation  
