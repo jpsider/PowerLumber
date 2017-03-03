@@ -132,7 +132,7 @@ function write-Log() {
 	#>
     [CmdletBinding(DefaultParameterSetName='LogFileFalse')]
 	param(
-		[Parameter(Mandatory=$true,ParameterSetName='LogFileTrue')]
+		[Parameter(Mandatory=$true,Position=1,ParameterSetName='LogFileTrue')]
 		[Parameter(Mandatory=$true,ParameterSetName='LogFileFalse')]
 			[string]$Message,
 		[Parameter(Mandatory=$true,ParameterSetName='LogFileTrue')]
