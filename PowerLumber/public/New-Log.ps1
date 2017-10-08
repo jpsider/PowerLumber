@@ -18,18 +18,20 @@ function New-Log {
 	.NOTES
 		No Additional information about the function or script.
 	#>
+	[CmdletBinding(
+		SupportsShouldProcess=$true
+	)]
 	param(    
-		[cmdletbinding()]
 		[Parameter(Mandatory=$true)]
 			[string]$Logfile
     ) 
     try {
         if( !(Split-Path -Path $Logfile -ErrorAction SilentlyContinue)) {
             write-Log -Message "Creating new Directory." -OutputStyle consoleOnly
-            New-Item (Split-Path -Path $Logfile) -ItemType Directory -Force
+            if($PSCmdlet.ShouldProcess("Creating new Directory")) {New-Item (Split-Path -Path $Logfile) -ItemType Directory -Force}
         }
         write-Log -Message "Creating new file." -OutputStyle consoleOnly
-        New-Item $logfile -type file -force -value "New file created."
+        if($PSCmdlet.ShouldProcess("Creating new File")){New-Item $logfile -type file -force -value "New file created."}
     }
 	Catch {
 	    $ErrorMessage = $_.Exception.Message
