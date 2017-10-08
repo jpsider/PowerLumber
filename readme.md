@@ -1,4 +1,31 @@
 # PowerLumber
+
+Simple Powershell Logging Module
+
+## GitPitch PitchMe presentation
+
+* [gitpitch.com/jpsider/PowerLumber](https://gitpitch.com/jpsider/PowerLumber)
+
+## Getting Started
+
+Install from the PSGallery and Import the module
+
+    Install-Module PowerLumber
+    Import-Module PowerLumber
+
+
+## More Information
+
+For more information
+
+* [PowerLumber.readthedocs.io](http://PowerLumber.readthedocs.io)
+* [github.com/jpsider/PowerLumber](https://github.com/jpsider/PowerLumber)
+* [jpsider.github.io](https://jpsider.github.io)
+
+
+This project was generated using [Kevin Marquette](http://kevinmarquette.github.io)'s [Full Module Plaster Template](https://github.com/KevinMarquette/PlasterTemplates/tree/master/FullModuleTemplate).
+
+# PowerLumber
 ![Alt text](https://github.com/jpsider/PowerLumber/blob/master/Images/PowerLumber_small.png "PowerLumber Icon")  
 
 ## Overview  
