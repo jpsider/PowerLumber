@@ -5,7 +5,7 @@
 #|  __/ (_) \ V  V /  __/ |  | |__| |_| | | | | | | |_) |  __/ |   
 #|_|   \___/ \_/\_/ \___|_|  |_____\__,_|_| |_| |_|_.__/ \___|_|   
 #=============================================================================================
-function Clear-Logs {
+function Clear-LogDirectory {
 	<#
 	.SYNOPSIS
 		Clears logs in a directory older than the specified number of days.
@@ -16,7 +16,7 @@ function Clear-Logs {
 	.PARAMETER Daysback
 		Please Specify a number of daysback.
 	.EXAMPLE
-		Clear-Logs -Path "c:\temp" -DaysBack 3                    
+		Clear-LogDirectory -Path "c:\temp" -DaysBack 3                    
 	.NOTES
 		No Additional information about the function or script.
 	#>    
