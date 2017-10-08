@@ -1,6 +1,7 @@
 # PowerLumber
 
 Simple Powershell Logging Module
+![Build status](https://ci.appveyor.com/api/projects/status/github/jpsider/powerlumber?branch=master&svg=true)
 
 ## GitPitch PitchMe presentation
 
