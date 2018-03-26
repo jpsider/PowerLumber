@@ -47,25 +47,38 @@ Import-Module \<path>\PowerLumber.psm1
       Import-module $filepath  
 
 ## Available Functions 
-Clear-Logs  
-Get-Timestamp  
-new-Log  
-write-Log  
+Clear-LogDirectory   
+New-Log  
+Write-Log  
+Invoke-RollLog  
+Write-LogLevel  
 
 ## Examples:  
 ### Create New Log file  
-    new-log -logfile c:\temp\new.log  
+    New-Log -logfile c:\temp\new.log  
 ### Clear log files in path older than specified days  
-    Clear-Logs -Path "c:\temp" -DaysBack 3  
-### Get a timestamp  
-    $datenow = Get-Timestamp  
+    Clear-LogDirectory -Path "c:\temp" -DaysBack 3  
 ### Log a message to logfile with no console output  
-    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle noConsole  
+    Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle noConsole  
 ### Log a message to logfile with console output  
-    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle both  
+    Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle both  
 ### Log a message with only console output (not sure why'd you would specify a log file, but you can!)  
-    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle consoleOnly  
+    Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle consoleOnly  
 ### Log a message to logfile with console output  
-    write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"                        
+    Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"                        
 ### Log a message with only console output  
-    write-Log -Message "I love lamp" -OutputStyle consoleOnly  
+    Write-Log -Message "I love lamp" -OutputStyle consoleOnly  
+
+## Understanding Write-LogLevel  
+    -RunLogLevel is meant to be a system/script wide Level  
+    -MsgLevel is meant to be for a specific Log Message  
+### This Module will only write Equal or Lower LogLevels based on the Message Level compared to the -RunLogLevel
+#### Setting -RunLogLevel to All, will force all Messages to be written and displayed.  
+    Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel All -MsgLevel TRACE  
+#### Setting -RunLogLevel to CONSOLEONLY will not write any messages, all log messages will be displayed to the console  
+    Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY  
+#### The next two examples will log different items  
+##### Logs a Warning message to a log file and console  
+    Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel WARN -MsgLevel WARN  
+##### Logs a DEBUG Message to the console Only. No message written to a log file.  
+    Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel FATAL -MsgLevel DEBUG  

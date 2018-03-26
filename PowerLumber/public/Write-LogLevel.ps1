@@ -23,23 +23,23 @@ function Write-LogLevel
 	.PARAMETER MsgLevel
 		Please specify a Message Log Level.
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel All -MsgLevel
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel All -MsgLevel TRACE
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel TRACE -MsgLevel
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel TRACE -MsgLevel TRACE
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel DEBUG -MsgLevel
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel DEBUG -MsgLevel DEBUG
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel INFO -MsgLevel
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel INFO -MsgLevel INFO
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel WARN -MsgLevel
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel WARN -MsgLevel WARN
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel ERROR -MsgLevel            
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel ERROR -MsgLevel ERROR        
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel FATAL -MsgLevel           
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel FATAL -MsgLevel FATAL     
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel CONSOLEONLY -MsgLevel           
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY           
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel OFF -MsgLevel         
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel OFF -MsgLevel OFF
 	.NOTES
 		No Additional information about the function or script.
 	#>
