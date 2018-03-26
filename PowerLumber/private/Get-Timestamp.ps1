@@ -5,8 +5,9 @@
 #|  __/ (_) \ V  V /  __/ |  | |__| |_| | | | | | | |_) |  __/ |   
 #|_|   \___/ \_/\_/ \___|_|  |_____\__,_|_| |_| |_|_.__/ \___|_|   
 #=============================================================================================
-function Get-Timestamp {
-	<#
+function Get-Timestamp
+{
+    <#
 	.SYNOPSIS
 		Function to create timestamp.
 	.DESCRIPTION
@@ -16,15 +17,16 @@ function Get-Timestamp {
 	.NOTES
 		No Additional information about the function or script.
 	#>  
-    try {
+    try
+    {
         return $(get-date).ToString("yyyy-MM-dd HH:mm:ss")
     } 
-    Catch {
-	    $ErrorMessage = $_.Exception.Message
-    	$FailedItem = $_.Exception.ItemName		
-		Write-Error "Error: $ErrorMessage $FailedItem"
-		BREAK		
-	}
+    Catch
+    {
+        $ErrorMessage = $_.Exception.Message
+        $FailedItem = $_.Exception.ItemName		
+        Throw "Get-Timestamp: $ErrorMessage $FailedItem"
+    }
 }
 #=============================================================================================
 #  ___                 _                _         _                        _   _              

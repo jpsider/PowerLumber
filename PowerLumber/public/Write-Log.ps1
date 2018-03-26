@@ -5,8 +5,9 @@
 #|  __/ (_) \ V  V /  __/ |  | |__| |_| | | | | | | |_) |  __/ |   
 #|_|   \___/ \_/\_/ \___|_|  |_____\__,_|_| |_| |_|_.__/ \___|_|   
 #=============================================================================================
-function Write-Log {
-	<#
+function Write-Log
+{
+    <#
 	.SYNOPSIS
 		Function to write log files, option to print to console.
 	.DESCRIPTION
@@ -30,42 +31,49 @@ function Write-Log {
 	.NOTES
 		No Additional information about the function or script.
 	#>
-    [CmdletBinding(DefaultParameterSetName='LogFileFalse')]
-	param(
-		[Parameter(Mandatory=$true,Position=1,ParameterSetName='LogFileTrue')]
-		[Parameter(Mandatory=$true,ParameterSetName='LogFileFalse')]
-			[string]$Message,
-		[Parameter(Mandatory=$true,ParameterSetName='LogFileTrue')]
-			[string]$Logfile,
-        [Parameter(Mandatory=$false,ParameterSetName='LogFileTrue')]
-		[Parameter(Mandatory=$true,ParameterSetName='LogFileFalse')]
-        [validateset('ConsoleOnly','Both','noConsole',IgnoreCase=$true)]
-			[string]$OutputStyle
-	)
-    try {
-	    $dateNow = Get-Timestamp
+    [CmdletBinding(DefaultParameterSetName = 'LogFileFalse')]
+    param(
+        [Parameter(Mandatory = $true, Position = 1, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
+        [string]$Message,
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
+        [string]$Logfile,
+        [Parameter(Mandatory = $false, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
+        [validateset('ConsoleOnly', 'Both', 'noConsole', IgnoreCase = $true)]
+        [string]$OutputStyle
+    )
+    try
+    {
+        $dateNow = Get-Timestamp
         switch ($OutputStyle)
         {
-            ConsoleOnly {
+            ConsoleOnly
+            {
                 Write-Output ""
-	    	    Write-Output "$dateNow $Message"
+                Write-Output "$dateNow $Message"
             }
-            Both {
+            Both
+            {
                 Write-Output ""
-	    	    Write-Output "$dateNow $Message"
-                if(!(Test-Path $logfile -ErrorAction SilentlyContinue)){
+                Write-Output "$dateNow $Message"
+                if (!(Test-Path $logfile -ErrorAction SilentlyContinue))
+                {
                     Write-Warning "Logfile does not exist."
                     New-Log -Logfile $Logfile
                 }
                 Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII                    
             }
-            noConsole{
+            noConsole
+            {
                 Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII
             }
-            default {
+            default
+            {
                 Write-Output ""
-	    	    Write-Output "$dateNow $Message"
-                if(!(Test-Path $logfile -ErrorAction SilentlyContinue)){
+                Write-Output "$dateNow $Message"
+                if (!(Test-Path $logfile -ErrorAction SilentlyContinue))
+                {
                     Write-Warning "Logfile does not exist."
                     New-Log -Logfile $Logfile
                 }            
@@ -73,12 +81,12 @@ function Write-Log {
             }
         }
     }
-	Catch {
-	    $ErrorMessage = $_.Exception.Message
-    	$FailedItem = $_.Exception.ItemName		
-		Write-Error "Error: $ErrorMessage $FailedItem"
-		BREAK		
-	}
+    Catch
+    {
+        $ErrorMessage = $_.Exception.Message
+        $FailedItem = $_.Exception.ItemName		
+        Throw "Write-Log: $ErrorMessage $FailedItem"		
+    }
 }
 #=============================================================================================
 #  ___                 _                _         _                        _   _              

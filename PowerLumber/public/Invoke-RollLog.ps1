@@ -8,23 +8,23 @@ function Invoke-RollLog
     .PARAMETER Weekday
         A valid Weekday in datetime format is required. 
 	.EXAMPLE
-        Invoke-RollLogs -LogFile "c:\temp\test.log"
+        Invoke-RollLogs -LogFile "c:\temp\test.log" -Weekday Tuesday
 	.NOTES
         It's pretty simple.
     #>
     [CmdletBinding()]
     [OutputType([boolean])]
     param(
-        [Parameter(Mandatory = $true)][String]$Logfile,
-        [Parameter(Mandatory = $true)]$Weekday
+        [Parameter(Mandatory = $true)][string]$Logfile,
+        [Parameter(Mandatory = $true)][string]$Weekday
 
     )
     try
     {
         if (!(Test-Path -Path $Logfile))
         {
-            Throw "LogFile path: $Logfile does not exist."
             Write-log -Message "#################### New Log created #####################" -Logfile $logfile -OutputStyle both
+            Throw "LogFile path: $Logfile does not exist."
         }
         else
         {
@@ -49,7 +49,6 @@ function Invoke-RollLog
     {
         $ErrorMessage = $_.Exception.Message
         $FailedItem = $_.Exception.ItemName		
-        Write-Error "Error: $ErrorMessage $FailedItem"
-        Throw $_
+        Throw "Invoke-RollLog: $ErrorMessage $FailedItem"
     }
 }

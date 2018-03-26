@@ -26,12 +26,12 @@ function Compare-Weekday
         if ($CurrentDay -eq $Weekday)
         {
             # The days match.
-            Return $true
+            $true
         }
         else
         {
             # The days do not match.
-            Return $false
+            $false
         }
     }
 }
