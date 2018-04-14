@@ -18,7 +18,7 @@ Describe "Write-LogLevel function for $moduleName" {
     }
     #CONSOLEONLY
     It "Should be 'consoleOnly' when RunLogLevel is set to 'CONSOLEONLY'." {
-        Write-LogLevel -Message "Test" -LogFile "FakePath" -RunLogLevel "CONSOLEONLY" -MsgLevel "DEBUG" | Should be consoleOnly
+        Write-LogLevel -Message "Test" -RunLogLevel "CONSOLEONLY" -MsgLevel "DEBUG" | Should be consoleOnly
     }
     #DEBUG
     It "Should be 'consoleOnly' when RunLogLevel is set to 'DEBUG' and MsgLevel is 'TRACE'." {

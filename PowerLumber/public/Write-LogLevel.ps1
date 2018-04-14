@@ -9,7 +9,7 @@ function Write-LogLevel
 {
     <#
 	.SYNOPSIS
-		Function to write log files, based on a set LogLevel.
+		Function to write information to  log files, based on a set LogLevel.
 	.DESCRIPTION
         Writes messages to log file based on a set LogLevel.
         -RunLogLevel is the System Wide setting.
@@ -43,15 +43,20 @@ function Write-LogLevel
 	.NOTES
 		No Additional information about the function or script.
 	#>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'LogFileFalse')]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
         [string]$Message,
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
         [string]$Logfile,
-        [Parameter(Mandatory = $true)][ValidateSet("ALL", "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "CONSOLEONLY", "OFF")]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
+        [ValidateSet("ALL", "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "CONSOLEONLY", "OFF")]
         [string]$RunLogLevel,
-        [Parameter(Mandatory = $true)][ValidateSet("TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "CONSOLEONLY")]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
+        [ValidateSet("TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "CONSOLEONLY")]
         [string]$MsgLevel
     )
     try
@@ -60,11 +65,11 @@ function Write-LogLevel
         {
             ALL
             {
-                $OutPutStyle = "both"
+                $OutPutStyle = "Both"
             }
             TRACE
             {
-                $OutPutStyle = "both"
+                $OutPutStyle = "Both"
             }
             OFF
             {
@@ -72,38 +77,45 @@ function Write-LogLevel
             }
             CONSOLEONLY
             {
-                $OutPutStyle = "consoleOnly"
+                $OutPutStyle = "ConsoleOnly"
             }
             default
             {
                 if (($RunLogLevel -eq "DEBUG") -and ($MsgLevel -ne "TRACE") -and ($MsgLevel -ne "CONSOLEONLY"))
                 {
-                    $OutPutStyle = "both"
+                    $OutPutStyle = "Both"
                 }
                 elseif (($RunLogLevel -eq "INFO") -and ($MsgLevel -ne "TRACE") -and ($MsgLevel -ne "DEBUG") -and ($MsgLevel -ne "CONSOLEONLY"))
                 {
-                    $OutPutStyle = "both"
+                    $OutPutStyle = "Both"
                 }
                 elseif (($RunLogLevel -eq "WARN") -and ($MsgLevel -ne "TRACE") -and ($MsgLevel -ne "DEBUG") -and ($MsgLevel -ne "INFO") -and ($MsgLevel -ne "CONSOLEONLY"))
                 {
-                    $OutPutStyle = "both"
+                    $OutPutStyle = "Both"
                 }
                 elseif (($RunLogLevel -eq "ERROR") -and ($MsgLevel -ne "TRACE") -and ($MsgLevel -ne "DEBUG") -and ($MsgLevel -ne "INFO") -and ($MsgLevel -ne "WARN") -and ($MsgLevel -ne "CONSOLEONLY"))
                 {
-                    $OutPutStyle = "both"
+                    $OutPutStyle = "Both"
                 }
                 elseif (($RunLogLevel -eq "FATAL") -and ($MsgLevel -ne "TRACE") -and ($MsgLevel -ne "DEBUG") -and ($MsgLevel -ne "INFO") -and ($MsgLevel -ne "WARN") -and ($MsgLevel -ne "ERROR") -and ($MsgLevel -ne "CONSOLEONLY"))
                 {
-                    $OutPutStyle = "both"
+                    $OutPutStyle = "Both"
                 }
                 else
                 {
-                    $OutPutStyle = "consoleOnly"
+                    $OutPutStyle = "ConsoleOnly"
                 }
             }
         }
         $Message = $MsgLevel + ": " + $Message
-        Write-Log -Message $Message -Logfile $Logfile -OutputStyle $OutPutStyle
+        if (($Logfile -eq "") -or ($null -eq $logfile)) 
+        {
+            Write-Log -Message $Message -OutputStyle $OutPutStyle
+        }
+        else
+        {
+            Write-Log -Message $Message -Logfile $Logfile -OutputStyle $OutPutStyle
+        }
     }
     Catch
     {

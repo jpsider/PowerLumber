@@ -33,7 +33,7 @@ function Write-Log
 	#>
     [CmdletBinding(DefaultParameterSetName = 'LogFileFalse')]
     param(
-        [Parameter(Mandatory = $true, Position = 1, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
         [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
         [string]$Message,
         [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
@@ -66,6 +66,11 @@ function Write-Log
             }
             noConsole
             {
+                if (!(Test-Path $logfile -ErrorAction SilentlyContinue))
+                {
+                    Write-Warning "Logfile does not exist."
+                    New-Log -Logfile $Logfile
+                }
                 Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII
             }
             default
