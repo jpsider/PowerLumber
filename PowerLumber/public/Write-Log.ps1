@@ -81,7 +81,7 @@ function Write-Log
                 {
                     Write-Warning "Logfile does not exist."
                     New-Log -Logfile $Logfile
-                }            
+                }
                 Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII
             }
         }

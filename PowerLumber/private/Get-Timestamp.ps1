@@ -16,11 +16,11 @@ function Get-Timestamp
 		$datenow = Get-Timestamp
 	.NOTES
 		No Additional information about the function or script.
-	#>  
+	#> 
     try
     {
         return $(get-date).ToString("yyyy-MM-dd HH:mm:ss")
-    } 
+    }
     Catch
     {
         $ErrorMessage = $_.Exception.Message

@@ -20,8 +20,8 @@ function Clear-LogDirectory
 		Clear-LogDirectory -Path "c:\temp" -DaysBack 3
 	.NOTES
 		No Additional information about the function or script.
-	#>    
-    param(    
+	#>
+    param(
         [cmdletbinding()]
         [Parameter(Mandatory = $true)]
         [ValidateScript( {Test-Path $_ })]

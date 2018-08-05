@@ -15,7 +15,7 @@ function New-Log
 	.PARAMETER Logfile
 		Please Specify a valid path and file name.
 	.EXAMPLE
-		New-Log -Logfile c:\temp\new.log                    
+		New-Log -Logfile c:\temp\new.log
 	.NOTES
 		No Additional information about the function or script.
 	#>
@@ -25,7 +25,7 @@ function New-Log
     param(    
         [Parameter(Mandatory = $true)]
         [string]$Logfile
-    ) 
+    )
     try
     {
         if ( !(Split-Path -Path $Logfile -ErrorAction SilentlyContinue))
@@ -39,8 +39,8 @@ function New-Log
     Catch
     {
         $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName		
-        Throw "New-Log: $ErrorMessage $FailedItem"		
+        $FailedItem = $_.Exception.ItemName
+        Throw "New-Log: $ErrorMessage $FailedItem"
     }
 }
 #=============================================================================================
