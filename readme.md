@@ -2,13 +2,13 @@
 
 Simple Powershell Logging Module
 
-[![Build status](https://ci.appveyor.com/api/projects/status/github/jpsider/powerlumber?branch=master&svg=true)](https://ci.appveyor.com/project/JustinSider/powerlumber)
-[![PS Gallery](https://img.shields.io/badge/install-PS%20Gallery-blue.svg)](https://www.powershellgallery.com/packages/powerlumber/)
-[![Coverage Status](https://coveralls.io/repos/github/jpsider/powerlumber/badge.svg?branch=master)](https://coveralls.io/github/jpsider/powerlumber?branch=master)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/jpsider/PowerLumber?branch=master&svg=true)](https://ci.appveyor.com/project/JustinSider/PowerLumber)
+[![PS Gallery](https://img.shields.io/badge/install-PS%20Gallery-blue.svg)](https://www.powershellgallery.com/packages/PowerLumber/)
+[![Coverage Status](https://coveralls.io/repos/github/jpsider/PowerLumber/badge.svg?branch=master)](https://coveralls.io/github/jpsider/PowerLumber?branch=master)
 
 ## Docs  
 
-[Help](https://github.com/jpsider/powerlumber/tree/master/docs)
+[Help](https://github.com/jpsider/PowerLumber/tree/master/docs)
 
 ## GitPitch PitchMe presentation
 
