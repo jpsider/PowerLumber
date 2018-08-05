@@ -22,7 +22,7 @@ function New-Log
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
-    param(    
+    param(
         [Parameter(Mandatory = $true)]
         [string]$Logfile
     )
