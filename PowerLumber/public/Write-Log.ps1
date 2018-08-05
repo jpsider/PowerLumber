@@ -1,9 +1,9 @@
 #=============================================================================================
-# ____                        _                    _               
-#|  _ \ _____      _____ _ __| |   _   _ _ __ ___ | |__   ___ _ __ 
+# ____                        _                    _
+#|  _ \ _____      _____ _ __| |   _   _ _ __ ___ | |__   ___ _ __
 #| |_) / _ \ \ /\ / / _ \ '__| |  | | | | '_ ` _ \| '_ \ / _ \ '__|
-#|  __/ (_) \ V  V /  __/ |  | |__| |_| | | | | | | |_) |  __/ |   
-#|_|   \___/ \_/\_/ \___|_|  |_____\__,_|_| |_| |_|_.__/ \___|_|   
+#|  __/ (_) \ V  V /  __/ |  | |__| |_| | | | | | | |_) |  __/ |
+#|_|   \___/ \_/\_/ \___|_|  |_____\__,_|_| |_| |_|_.__/ \___|_|
 #=============================================================================================
 function Write-Log
 {
@@ -25,9 +25,9 @@ function Write-Log
 	.EXAMPLE
 		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle consoleOnly
 	.EXAMPLE
-		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"                        
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"
 	.EXAMPLE
-		Write-Log -Message "I love lamp" -OutputStyle ConsoleOnly                        
+		Write-Log -Message "I love lamp" -OutputStyle ConsoleOnly
 	.NOTES
 		No Additional information about the function or script.
 	#>
@@ -62,7 +62,7 @@ function Write-Log
                     Write-Warning "Logfile does not exist."
                     New-Log -Logfile $Logfile
                 }
-                Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII                    
+                Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII
             }
             noConsole
             {
@@ -89,14 +89,14 @@ function Write-Log
     Catch
     {
         $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName		
-        Throw "Write-Log: $ErrorMessage $FailedItem"		
+        $FailedItem = $_.Exception.ItemName
+        Throw "Write-Log: $ErrorMessage $FailedItem"
     }
 }
 #=============================================================================================
-#  ___                 _                _         _                        _   _              
-# |_ _|_ ____   _____ | | _____        / \  _   _| |_ ___  _ __ ___   __ _| |_(_) ___  _ __   
-#  | || '_ \ \ / / _ \| |/ / _ \_____ / _ \| | | | __/ _ \| '_ ` _ \ / _` | __| |/ _ \| '_ \  
-#  | || | | \ V / (_) |   <  __/_____/ ___ \ |_| | || (_) | | | | | | (_| | |_| | (_) | | | | 
-# |___|_| |_|\_/ \___/|_|\_\___|    /_/   \_\__,_|\__\___/|_| |_| |_|\__,_|\__|_|\___/|_| |_| 
+#  ___                 _                _         _                        _   _
+# |_ _|_ ____   _____ | | _____        / \  _   _| |_ ___  _ __ ___   __ _| |_(_) ___  _ __
+#  | || '_ \ \ / / _ \| |/ / _ \_____ / _ \| | | | __/ _ \| '_ ` _ \ / _` | __| |/ _ \| '_ \
+#  | || | | \ V / (_) |   <  __/_____/ ___ \ |_| | || (_) | | | | | | (_| | |_| | (_) | | | |
+# |___|_| |_|\_/ \___/|_|\_\___|    /_/   \_\__,_|\__\___/|_| |_| |_|\__,_|\__|_|\___/|_| |_|
 #=============================================================================================

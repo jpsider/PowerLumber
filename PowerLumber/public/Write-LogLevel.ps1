@@ -1,9 +1,9 @@
 #=============================================================================================
-# ____                        _                    _               
-#|  _ \ _____      _____ _ __| |   _   _ _ __ ___ | |__   ___ _ __ 
+# ____                        _                    _
+#|  _ \ _____      _____ _ __| |   _   _ _ __ ___ | |__   ___ _ __
 #| |_) / _ \ \ /\ / / _ \ '__| |  | | | | '_ ` _ \| '_ \ / _ \ '__|
-#|  __/ (_) \ V  V /  __/ |  | |__| |_| | | | | | | |_) |  __/ |   
-#|_|   \___/ \_/\_/ \___|_|  |_____\__,_|_| |_| |_|_.__/ \___|_|   
+#|  __/ (_) \ V  V /  __/ |  | |__| |_| | | | | | | |_) |  __/ |
+#|_|   \___/ \_/\_/ \___|_|  |_____\__,_|_| |_| |_|_.__/ \___|_|
 #=============================================================================================
 function Write-LogLevel
 {
@@ -35,9 +35,9 @@ function Write-LogLevel
 	.EXAMPLE
 		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel ERROR -MsgLevel ERROR        
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel FATAL -MsgLevel FATAL     
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel FATAL -MsgLevel FATAL
 	.EXAMPLE
-		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY           
+		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 	.EXAMPLE
 		Write-LogLevel -Message "I love lamp" -Logfile "C:\temp\mylog.log" -RunLogLevel OFF -MsgLevel OFF
 	.NOTES
@@ -73,7 +73,7 @@ function Write-LogLevel
             }
             OFF
             {
-                Break                   
+                Break
             }
             CONSOLEONLY
             {
@@ -108,7 +108,7 @@ function Write-LogLevel
             }
         }
         $Message = $MsgLevel + ": " + $Message
-        if (($Logfile -eq "") -or ($null -eq $logfile)) 
+        if (($Logfile -eq "") -or ($null -eq $logfile))
         {
             Write-Log -Message $Message -OutputStyle $OutPutStyle
         }
@@ -120,14 +120,14 @@ function Write-LogLevel
     Catch
     {
         $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName		
+        $FailedItem = $_.Exception.ItemName
         Throw "Write-LogLevel: $ErrorMessage $FailedItem"
     }
 }
 #=============================================================================================
-#  ___                 _                _         _                        _   _              
-# |_ _|_ ____   _____ | | _____        / \  _   _| |_ ___  _ __ ___   __ _| |_(_) ___  _ __   
-#  | || '_ \ \ / / _ \| |/ / _ \_____ / _ \| | | | __/ _ \| '_ ` _ \ / _` | __| |/ _ \| '_ \  
-#  | || | | \ V / (_) |   <  __/_____/ ___ \ |_| | || (_) | | | | | | (_| | |_| | (_) | | | | 
-# |___|_| |_|\_/ \___/|_|\_\___|    /_/   \_\__,_|\__\___/|_| |_| |_|\__,_|\__|_|\___/|_| |_| 
+#  ___                 _                _         _                        _   _
+# |_ _|_ ____   _____ | | _____        / \  _   _| |_ ___  _ __ ___   __ _| |_(_) ___  _ __
+#  | || '_ \ \ / / _ \| |/ / _ \_____ / _ \| | | | __/ _ \| '_ ` _ \ / _` | __| |/ _ \| '_ \
+#  | || | | \ V / (_) |   <  __/_____/ ___ \ |_| | || (_) | | | | | | (_| | |_| | (_) | | | |
+# |___|_| |_|\_/ \___/|_|\_\___|    /_/   \_\__,_|\__\___/|_| |_| |_|\__,_|\__|_|\___/|_| |_|
 #=============================================================================================

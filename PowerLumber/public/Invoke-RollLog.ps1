@@ -4,9 +4,9 @@ function Invoke-RollLog
 	.DESCRIPTION
 		This function will Roll the log file if it is a new week day.
     .PARAMETER LogFile
-        A valid file path is required. 
+        A valid file path is required.
     .PARAMETER Weekday
-        A valid Weekday in datetime format is required. 
+        A valid Weekday in datetime format is required.
 	.EXAMPLE
         Invoke-RollLogs -LogFile "c:\temp\test.log" -Weekday Tuesday
 	.NOTES
@@ -48,7 +48,7 @@ function Invoke-RollLog
     catch
     {
         $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName		
+        $FailedItem = $_.Exception.ItemName
         Throw "Invoke-RollLog: $ErrorMessage $FailedItem"
     }
 }
