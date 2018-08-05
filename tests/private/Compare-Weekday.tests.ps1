@@ -1,4 +1,9 @@
 $script:ModuleName = 'PowerLumber'
+
+$here = (Split-Path -Parent $MyInvocation.MyCommand.Path) -replace 'tests', "$script:ModuleName"
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
+. "$here\$sut"
+
 Describe "Compare-Weekday function for $moduleName" {
     $Today = (Get-Date).DayOfWeek
     It "Should return True if the days Match." {
