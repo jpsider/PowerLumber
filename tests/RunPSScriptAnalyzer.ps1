@@ -1,6 +1,6 @@
 # Need to import all the files first of course.
 
-Set-Location "C:\OPEN_PROJECTS\PowerRestCLI\"
+Set-Location "C:\OPEN_PROJECTS\PowerLumber\"
 
 $FoundError = $false
 

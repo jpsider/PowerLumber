@@ -10,6 +10,7 @@ Describe "Write-Log function for $moduleName" {
     function Test-Path {}
     function Out-File {}
     function Write-Warning {}
+    function Get-Timestamp {}
     It "Should not Throw if the log file does exist" {
         Mock -CommandName 'Write-Output' -MockWith {
             $true
@@ -19,6 +20,7 @@ Describe "Write-Log function for $moduleName" {
         }
         Mock -CommandName 'Write-Warning' -MockWith {}
         Mock -CommandName 'New-Log' -MockWith {}
+        Mock -CommandName 'Get-Timestamp' -MockWith {}
         {Write-Log -Message "I love lamp" -Logfile "C:\fakepath\mylog.log" -OutputStyle noConsole} | Should -not -Throw
         Assert-MockCalled -CommandName 'Write-Output' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Write-Warning' -Times 0 -Exactly
@@ -34,6 +36,7 @@ Describe "Write-Log function for $moduleName" {
             $False
         }
         Mock -CommandName 'New-Log' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         {Write-Log -Message "I love lamp" -Logfile "C:\fakepath\mylog.log" -OutputStyle noConsole} | Should -not -Throw
         Assert-MockCalled -CommandName 'Write-Output' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-Warning' -Times 1 -Exactly
@@ -51,6 +54,7 @@ Describe "Write-Log function for $moduleName" {
             Throw "Could not create Log file."
         }
         Mock -CommandName 'Write-Warning' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         {Write-Log -Message "I love lamp" -Logfile "C:\fakepath\mylog.log" -OutputStyle noConsole} | Should -Throw
         Assert-MockCalled -CommandName 'Write-Output' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-Warning' -Times 2 -Exactly
@@ -61,6 +65,7 @@ Describe "Write-Log function for $moduleName" {
         Mock -CommandName 'Write-Output' -MockWith {}
         Mock -CommandName 'Write-Warning' -MockWith {}
         Mock -CommandName 'New-Log' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         Mock -CommandName 'Test-Path' -MockWith {
             $true
         }
@@ -73,6 +78,7 @@ Describe "Write-Log function for $moduleName" {
     It "Should not Throw -output style both, failed test-path." {
         Mock -CommandName 'Write-Output' -MockWith {}
         Mock -CommandName 'New-Log' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         Mock -CommandName 'Test-Path' -MockWith {
             $false
         }
@@ -86,6 +92,7 @@ Describe "Write-Log function for $moduleName" {
     It "Should not Throw. No output style." {
         Mock -CommandName 'Write-Output' -MockWith {}
         Mock -CommandName 'New-Log' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         Mock -CommandName 'Test-Path' -MockWith {
             $true
         }
@@ -99,6 +106,7 @@ Describe "Write-Log function for $moduleName" {
     It "Should not Throw. no output style, test-path failed." {
         Mock -CommandName 'Write-Output' -MockWith {}
         Mock -CommandName 'New-Log' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         Mock -CommandName 'Test-Path' -MockWith {
             $false
         }
@@ -113,6 +121,7 @@ Describe "Write-Log function for $moduleName" {
         Mock -CommandName 'Write-Output' -MockWith {}
         Mock -CommandName 'Write-Warning' -MockWith {}
         Mock -CommandName 'New-Log' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         {Write-Log -Message "I love lamp" -OutputStyle ConsoleOnly} | Should -not -Throw
         Assert-MockCalled -CommandName 'Write-Output' -Times 16 -Exactly
         Assert-MockCalled -CommandName 'Write-Warning' -Times 4 -Exactly
@@ -125,6 +134,7 @@ Describe "Write-Log function for $moduleName" {
         }
         Mock -CommandName 'Write-Warning' -MockWith {}
         Mock -CommandName 'New-Log' -MockWith {}
+		Mock -CommandName 'Get-Timestamp' -MockWith {}
         {Write-Log -Message "I love lamp" -OutputStyle ConsoleOnly} | Should -Throw
         Assert-MockCalled -CommandName 'Write-Output' -Times 17 -Exactly
         Assert-MockCalled -CommandName 'Write-Warning' -Times 4 -Exactly
