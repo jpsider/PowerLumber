@@ -1,11 +1,15 @@
 site_name: PowerLumber
 repo_url: https://github.com/jpsider/PowerLumber
 theme: readthedocs
+edit_uri: edit/master/docs/
 pages:
 - Home: index.md
 - PowerLumber Basics:
   - What is PowerLumber: about.md
   - Quick Start: Quick-Start-Installation-and-Example.md
-- Basic Commands:
-- Examples:
-- Acknowledgements: acknowledgements.md
+- Public Functions:
+  - Clear-LogDirectory: Clear-LogDirectory.md
+  - Invoke-RollLog: Invoke-RollLog.md
+  - New-Log: New-Log.md
+  - Write-Log: Write-Log.md
+  - Write-LogLevel: Write-LogLevel.md

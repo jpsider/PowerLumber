@@ -19,4 +19,3 @@ For more information
 
 * [PowerLumber.readthedocs.io](http://PowerLumber.readthedocs.io)
 * [github.com/jpsider/PowerLumber](https://github.com/jpsider/PowerLumber)
-* [jpsider.github.io](https://jpsider.github.io)
