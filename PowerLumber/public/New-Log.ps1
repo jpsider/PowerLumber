@@ -30,10 +30,10 @@ function New-Log
     {
         if ( !(Split-Path -Path $Logfile -ErrorAction SilentlyContinue))
         {
-            write-Log -Message "Creating new Directory." -OutputStyle consoleOnly
+            Write-Message -Message "Creating new Directory." -OutputStyle consoleOnly
             if ($PSCmdlet.ShouldProcess("Creating new Directory")) {New-Item (Split-Path -Path $Logfile) -ItemType Directory -Force}
         }
-        write-Log -Message "Creating new file." -OutputStyle consoleOnly
+        Write-Message -Message "Creating new file." -OutputStyle consoleOnly
         if ($PSCmdlet.ShouldProcess("Creating new File")) {New-Item $logfile -type file -force -value "New file created."}
     }
     Catch

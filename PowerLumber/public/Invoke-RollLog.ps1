@@ -23,7 +23,7 @@ function Invoke-RollLog
     {
         if (!(Test-Path -Path $Logfile))
         {
-            Write-log -Message "#################### New Log created #####################" -Logfile $logfile -OutputStyle both
+            Write-Message -Message "#################### New Log created #####################" -Logfile $logfile -OutputStyle both
             Throw "LogFile path: $Logfile does not exist."
         }
         else
@@ -41,7 +41,7 @@ function Invoke-RollLog
                 $OldLogName = "$currentTime.log"
                 Rename-Item -Path $logfile -NewName $OldLogName -Force -Confirm:$false
                 # Create a new log.
-                write-log -Message "#################### New Log created #####################" -Logfile $logfile
+                Write-Message -Message "#################### New Log created #####################" -Logfile $logfile
             }
         }
     }

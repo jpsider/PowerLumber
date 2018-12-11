@@ -34,12 +34,12 @@ function Clear-LogDirectory
         $DatetoDelete = (Get-Date).AddDays( - $Daysback)
         if (! (Get-ChildItem $Path))
         {
-            Write-Log -Message "Path is not valid" -OutputStyle consoleOnly
+            Write-Message -Message "Path is not valid" -OutputStyle consoleOnly
         }
         else
         {
             Get-ChildItem $Path -Recurse  | Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item -Recurse -Confirm:$false
-            Write-Log -Message "Logs older than $DaysBack have been cleared!" -OutputStyle consoleOnly
+            Write-Message -Message "Logs older than $DaysBack have been cleared!" -OutputStyle consoleOnly
         }
     }
     Catch

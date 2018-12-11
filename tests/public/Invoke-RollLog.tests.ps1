@@ -5,7 +5,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
 Describe "Invoke-RollLog function for $moduleName" {
-    function Write-log {}
+    function Write-Message {}
     It "Should Throw if the Logfile does not exist." {
         Mock -CommandName 'Test-Path' -MockWith {
             $false

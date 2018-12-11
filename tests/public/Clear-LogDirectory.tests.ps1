@@ -5,7 +5,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
 Describe "Clear-LogDirectory function for $moduleName" {
-    function Write-Log {}
+    function Write-Message {}
     It "Should not Throw." {
         function Remove-Item {}
         function Get-ChildItem {}

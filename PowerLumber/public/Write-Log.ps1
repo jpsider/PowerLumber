@@ -9,25 +9,37 @@ function Write-Log
 {
     <#
 	.SYNOPSIS
-		Function to write log files, option to print to console.
+		Function to write information to  log files, based on a set LogLevel.
 	.DESCRIPTION
-		Writes messages to log file and optional console.
+        Writes messages to log file based on a set LogLevel.
+        -LogLevel is the System Wide setting.
+        -MsgType is specific to a message.
 	.PARAMETER Message
 		Please Specify a message.
 	.PARAMETER Logfile
 		Please Specify a valid logfile.
-	.PARAMETER OutputStyle
-		Please specify an output OutputStyle.
+	.PARAMETER LogLevel
+		Please specify a Running Log Level.
+	.PARAMETER MsgType
+		Please specify a Message Log Level.
 	.EXAMPLE
-		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle noConsole
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel All -MsgType TRACE
 	.EXAMPLE
-		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle both
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel TRACE -MsgType TRACE
 	.EXAMPLE
-		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle consoleOnly
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel DEBUG -MsgType DEBUG
 	.EXAMPLE
-		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel INFO -MsgType INFO
 	.EXAMPLE
-		Write-Log -Message "I love lamp" -OutputStyle ConsoleOnly
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel WARN -MsgType WARN
+	.EXAMPLE
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel ERROR -MsgType ERROR
+	.EXAMPLE
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel FATAL -MsgType FATAL
+	.EXAMPLE
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel CONSOLEONLY -MsgType CONSOLEONLY
+	.EXAMPLE
+		Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -LogLevel OFF -MsgType OFF
 	.NOTES
 		No Additional information about the function or script.
 	#>
@@ -38,52 +50,71 @@ function Write-Log
         [string]$Message,
         [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
         [string]$Logfile,
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
         [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
-        [validateset('ConsoleOnly', 'Both', 'noConsole', IgnoreCase = $true)]
-        [string]$OutputStyle
+        [ValidateSet("ALL", "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "CONSOLEONLY", "OFF")]
+        [string]$LogLevel,
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileTrue')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
+        [ValidateSet("TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "CONSOLEONLY")]
+        [string]$MsgType
     )
     try
     {
-        $dateNow = Get-Timestamp
-        switch ($OutputStyle)
+        switch ($LogLevel)
         {
-            ConsoleOnly
+            ALL
             {
-                Write-Output ""
-                Write-Output "$dateNow $Message"
+                $OutPutStyle = "Both"
             }
-            Both
+            TRACE
             {
-                Write-Output ""
-                Write-Output "$dateNow $Message"
-                if (!(Test-Path $logfile -ErrorAction SilentlyContinue))
-                {
-                    Write-Warning "Logfile does not exist."
-                    New-Log -Logfile $Logfile
-                }
-                Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII
+                $OutPutStyle = "Both"
             }
-            noConsole
+            OFF
             {
-                if (!(Test-Path $logfile -ErrorAction SilentlyContinue))
-                {
-                    Write-Warning "Logfile does not exist."
-                    New-Log -Logfile $Logfile
-                }
-                Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII
+                Break
+            }
+            CONSOLEONLY
+            {
+                $OutPutStyle = "ConsoleOnly"
             }
             default
             {
-                Write-Output ""
-                Write-Output "$dateNow $Message"
-                if (!(Test-Path $logfile -ErrorAction SilentlyContinue))
+                if (($LogLevel -eq "DEBUG") -and ($MsgType -ne "TRACE") -and ($MsgType -ne "CONSOLEONLY"))
                 {
-                    Write-Warning "Logfile does not exist."
-                    New-Log -Logfile $Logfile
+                    $OutPutStyle = "Both"
                 }
-                Write-Output "$dateNow $Message" | Out-File $Logfile -append -encoding ASCII
+                elseif (($LogLevel -eq "INFO") -and ($MsgType -ne "TRACE") -and ($MsgType -ne "DEBUG") -and ($MsgType -ne "CONSOLEONLY"))
+                {
+                    $OutPutStyle = "Both"
+                }
+                elseif (($LogLevel -eq "WARN") -and ($MsgType -ne "TRACE") -and ($MsgType -ne "DEBUG") -and ($MsgType -ne "INFO") -and ($MsgType -ne "CONSOLEONLY"))
+                {
+                    $OutPutStyle = "Both"
+                }
+                elseif (($LogLevel -eq "ERROR") -and ($MsgType -ne "TRACE") -and ($MsgType -ne "DEBUG") -and ($MsgType -ne "INFO") -and ($MsgType -ne "WARN") -and ($MsgType -ne "CONSOLEONLY"))
+                {
+                    $OutPutStyle = "Both"
+                }
+                elseif (($LogLevel -eq "FATAL") -and ($MsgType -ne "TRACE") -and ($MsgType -ne "DEBUG") -and ($MsgType -ne "INFO") -and ($MsgType -ne "WARN") -and ($MsgType -ne "ERROR") -and ($MsgType -ne "CONSOLEONLY"))
+                {
+                    $OutPutStyle = "Both"
+                }
+                else
+                {
+                    $OutPutStyle = "ConsoleOnly"
+                }
             }
+        }
+        $Message = $MsgType + ": " + $Message
+        if (($Logfile -eq "") -or ($null -eq $logfile))
+        {
+            Write-Message -Message $Message -OutputStyle $OutPutStyle
+        }
+        else
+        {
+            Write-Message -Message $Message -Logfile $Logfile -OutputStyle $OutPutStyle
         }
     }
     Catch

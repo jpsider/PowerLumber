@@ -4,141 +4,142 @@ $here = (Split-Path -Parent $MyInvocation.MyCommand.Path) -replace 'tests', "$sc
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
+
 Describe "Write-Log function for $moduleName" {
-    function New-Log {}
-    function Write-Output {}
-    function Test-Path {}
-    function Out-File {}
-    function Write-Warning {}
-    function Get-Timestamp {}
-    It "Should not Throw if the log file does exist" {
-        Mock -CommandName 'Write-Output' -MockWith {
-            $true
-        }
-        Mock -CommandName 'Test-Path' -MockWith {
-            $true
-        }
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        Mock -CommandName 'New-Log' -MockWith {}
-        Mock -CommandName 'Get-Timestamp' -MockWith {}
-        {Write-Log -Message "I love lamp" -Logfile "C:\fakepath\mylog.log" -OutputStyle noConsole} | Should -not -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 1 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 0 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 1 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 0 -Exactly
+    function Write-Message
+    {
+        param(
+            [string]$OutputStyle
+        )
+        return $OutPutStyle
     }
-    It "Should not Throw if the log file does not exist." {
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        Mock -CommandName 'Write-Output' -MockWith {
-            $true
-        }
-        Mock -CommandName 'Test-Path' -MockWith {
-            $False
-        }
-        Mock -CommandName 'New-Log' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        {Write-Log -Message "I love lamp" -Logfile "C:\fakepath\mylog.log" -OutputStyle noConsole} | Should -not -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 1 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 1 -Exactly
+    #ALL
+    It "Should be 'both' when LogLevel is set to 'All'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "All" -MsgType "DEBUG" | Should be both
     }
-    It "Should Throw if the log file does not exist and could not be created." {
-        Mock -CommandName 'Write-Output' -MockWith {
-            $true
-        }
-        Mock -CommandName 'Test-Path' -MockWith {
-            $False
-        }
-        Mock -CommandName 'New-Log' -MockWith {
-            Throw "Could not create Log file."
-        }
-        Mock -CommandName 'Write-Warning' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        {Write-Log -Message "I love lamp" -Logfile "C:\fakepath\mylog.log" -OutputStyle noConsole} | Should -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 3 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 2 -Exactly
+    #TRACE
+    It "Should be 'both' when LogLevel is set to 'TRACE'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "TRACE" -MsgType "DEBUG" | Should be both
     }
-    It "Should not Throw." {
-        Mock -CommandName 'Write-Output' -MockWith {}
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        Mock -CommandName 'New-Log' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        Mock -CommandName 'Test-Path' -MockWith {
-            $true
-        }
-        {Write-Log -Message "I love lamp" -Logfile "C:\fakepath\mylog.log" -OutputStyle both} | Should -not -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 5 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 2 -Exactly
+    #CONSOLEONLY
+    It "Should be 'consoleOnly' when LogLevel is set to 'CONSOLEONLY'." {
+        Write-Log -Message "Test" -LogLevel "CONSOLEONLY" -MsgType "DEBUG" | Should be consoleOnly
     }
-    It "Should not Throw -output style both, failed test-path." {
-        Mock -CommandName 'Write-Output' -MockWith {}
-        Mock -CommandName 'New-Log' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        Mock -CommandName 'Test-Path' -MockWith {
-            $false
-        }
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        {Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log" -OutputStyle both} | Should -not -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 8 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 3 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 5 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 3 -Exactly
+    #DEBUG
+    It "Should be 'consoleOnly' when LogLevel is set to 'DEBUG' and MsgType is 'TRACE'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "DEBUG" -MsgType "TRACE" | Should be consoleOnly
     }
-    It "Should not Throw. No output style." {
-        Mock -CommandName 'Write-Output' -MockWith {}
-        Mock -CommandName 'New-Log' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        Mock -CommandName 'Test-Path' -MockWith {
-            $true
-        }
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        {Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"} | Should -not -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 11 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 3 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 6 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 3 -Exactly
+    It "Should be 'both' when LogLevel is set to 'DEBUG' and MsgType is 'DEBUG'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "DEBUG" -MsgType "DEBUG" | Should be both
     }
-    It "Should not Throw. no output style, test-path failed." {
-        Mock -CommandName 'Write-Output' -MockWith {}
-        Mock -CommandName 'New-Log' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        Mock -CommandName 'Test-Path' -MockWith {
-            $false
-        }
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        {Write-Log -Message "I love lamp" -Logfile "C:\temp\mylog.log"} | Should -not -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 14 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 7 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 4 -Exactly
+    It "Should be 'both' when LogLevel is set to 'DEBUG' and MsgType is 'INFO'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "DEBUG" -MsgType "INFO" | Should be both
     }
-    It "Should not Throw. ConsoleOnly" {
-        Mock -CommandName 'Write-Output' -MockWith {}
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        Mock -CommandName 'New-Log' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        {Write-Log -Message "I love lamp" -OutputStyle ConsoleOnly} | Should -not -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 16 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 7 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 4 -Exactly
+    It "Should be 'both' when LogLevel is set to 'DEBUG' and MsgType is 'WARN'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "DEBUG" -MsgType "WARN" | Should be both
     }
-    It "Should Throw. Console Only, Write-Output failed" {
-        Mock -CommandName 'Write-Output' -MockWith {
-            Throw "Could not Write-Output"
+    It "Should be 'both' when LogLevel is set to 'DEBUG' and MsgType is 'ERROR'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "DEBUG" -MsgType "ERROR" | Should be both
+    }
+    It "Should be 'both' when LogLevel is set to 'DEBUG' and MsgType is 'FATAL'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "DEBUG" -MsgType "FATAL" | Should be both
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'DEBUG' and MsgType is 'CONSOLEONLY'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "DEBUG" -MsgType "CONSOLEONLY" | Should be consoleOnly
+    }
+    #INFO
+    It "Should be 'consoleOnly' when LogLevel is set to 'INFO' and MsgType is 'TRACE'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "INFO" -MsgType "TRACE" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'INFO' and MsgType is 'DEBUG'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "INFO" -MsgType "DEBUG" | Should be consoleOnly
+    }
+    It "Should be 'both' when LogLevel is set to 'INFO' and MsgType is 'INFO'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "INFO" -MsgType "INFO" | Should be both
+    }
+    It "Should be 'both' when LogLevel is set to 'INFO' and MsgType is 'WARN'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "INFO" -MsgType "WARN" | Should be both
+    }
+    It "Should be 'both' when LogLevel is set to 'INFO' and MsgType is 'ERROR'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "INFO" -MsgType "ERROR" | Should be both
+    }
+    It "Should be 'both' when LogLevel is set to 'INFO' and MsgType is 'FATAL'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "INFO" -MsgType "FATAL" | Should be both
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'INFO' and MsgType is 'CONSOLEONLY'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "INFO" -MsgType "CONSOLEONLY" | Should be consoleOnly
+    }
+    #WARN
+    It "Should be 'consoleOnly' when LogLevel is set to 'WARN' and MsgType is 'TRACE'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "WARN" -MsgType "TRACE" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'WARN' and MsgType is 'DEBUG'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "WARN" -MsgType "DEBUG" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'WARN' and MsgType is 'INFO'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "WARN" -MsgType "INFO" | Should be consoleOnly
+    }
+    It "Should be 'both' when LogLevel is set to 'WARN' and MsgType is 'WARN'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "WARN" -MsgType "WARN" | Should be both
+    }
+    It "Should be 'both' when LogLevel is set to 'WARN' and MsgType is 'ERROR'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "WARN" -MsgType "ERROR" | Should be both
+    }
+    It "Should be 'both' when LogLevel is set to 'WARN' and MsgType is 'FATAL'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "WARN" -MsgType "FATAL" | Should be both
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'WARN' and MsgType is 'CONSOLEONLY'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "WARN" -MsgType "CONSOLEONLY" | Should be consoleOnly
+    }
+    #ERROR
+    It "Should be 'consoleOnly' when LogLevel is set to 'ERROR' and MsgType is 'TRACE'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "ERROR" -MsgType "TRACE" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'ERROR' and MsgType is 'DEBUG'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "ERROR" -MsgType "DEBUG" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'ERROR' and MsgType is 'INFO'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "ERROR" -MsgType "INFO" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'ERROR' and MsgType is 'WARN'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "ERROR" -MsgType "WARN" | Should be consoleOnly
+    }
+    It "Should be 'both' when LogLevel is set to 'ERROR' and MsgType is 'ERROR'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "ERROR" -MsgType "ERROR" | Should be both
+    }
+    It "Should be 'both' when LogLevel is set to 'ERROR' and MsgType is 'FATAL'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "ERROR" -MsgType "FATAL" | Should be both
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'ERROR' and MsgType is 'CONSOLEONLY'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "ERROR" -MsgType "CONSOLEONLY" | Should be consoleOnly
+    }
+    #FATAL
+    It "Should be 'consoleOnly' when LogLevel is set to 'FATAL' and MsgType is 'TRACE'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "FATAL" -MsgType "TRACE" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'FATAL' and MsgType is 'DEBUG'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "FATAL" -MsgType "DEBUG" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'FATAL' and MsgType is 'INFO'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "FATAL" -MsgType "INFO" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'FATAL' and MsgType is 'WARN'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "FATAL" -MsgType "WARN" | Should be consoleOnly
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'FATAL' and MsgType is 'ERROR'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "FATAL" -MsgType "ERROR" | Should be consoleOnly
+    }
+    It "Should be 'both' when LogLevel is set to 'FATAL' and MsgType is 'FATAL'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "FATAL" -MsgType "FATAL" | Should be both
+    }
+    It "Should be 'consoleOnly' when LogLevel is set to 'FATAL' and MsgType is 'CONSOLEONLY'." {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "FATAL" -MsgType "CONSOLEONLY" | Should be consoleOnly
+    }
+    It "Should Throw when it cannot write a message to file." {
+        Mock -CommandName 'Write-Message' -MockWith {
+            Throw "Unable to call Write-Message"
         }
-        Mock -CommandName 'Write-Warning' -MockWith {}
-        Mock -CommandName 'New-Log' -MockWith {}
-		Mock -CommandName 'Get-Timestamp' -MockWith {}
-        {Write-Log -Message "I love lamp" -OutputStyle ConsoleOnly} | Should -Throw
-        Assert-MockCalled -CommandName 'Write-Output' -Times 17 -Exactly
-        Assert-MockCalled -CommandName 'Write-Warning' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Test-Path' -Times 7 -Exactly
-        Assert-MockCalled -CommandName 'New-Log' -Times 4 -Exactly
+        {Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "All" -MsgType "DEBUG"} | Should -Throw
+        Assert-MockCalled -CommandName 'Write-Message' -Times 1 -Exactly
     }
 }
