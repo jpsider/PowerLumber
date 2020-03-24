@@ -73,7 +73,7 @@ function Write-Log
             }
             OFF
             {
-                Break
+                $OutPutStyle = "None"
             }
             CONSOLEONLY
             {

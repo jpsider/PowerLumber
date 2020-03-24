@@ -40,7 +40,7 @@ function Write-Message
         [string]$Logfile,
         [Parameter(Mandatory = $false, ParameterSetName = 'LogFileTrue')]
         [Parameter(Mandatory = $true, ParameterSetName = 'LogFileFalse')]
-        [validateset('ConsoleOnly', 'Both', 'noConsole', IgnoreCase = $true)]
+        [validateset('ConsoleOnly', 'Both', 'noConsole','None', IgnoreCase = $true)]
         [string]$OutputStyle
     )
     try
@@ -52,6 +52,10 @@ function Write-Message
             {
                 Write-Output ""
                 Write-Output "$dateNow $Message"
+            }
+            None
+            {
+                # Do Nothing
             }
             Both
             {

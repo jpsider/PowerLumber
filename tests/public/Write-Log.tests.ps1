@@ -13,6 +13,10 @@ Describe "Write-Log function for $moduleName" {
         )
         return $OutPutStyle
     }
+    #OFF
+    It "Should be 'None' when LogLevel is set to 'OFF'" {
+        Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "OFF" -MsgType "CONSOLEONLY" | Should be None
+    }
     #ALL
     It "Should be 'both' when LogLevel is set to 'All'." {
         Write-Log -Message "Test" -LogFile "FakePath" -LogLevel "All" -MsgType "DEBUG" | Should be both
